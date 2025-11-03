@@ -441,7 +441,8 @@
         <div class="error-message" id="errorMessage">
             Thông tin đăng nhập không chính xác!
         </div>
-            <form onsubmit="login(event)">
+
+       <form onsubmit="login(event)">
             <div class="form-group">
                 <label>👤 Tên Nhân Viên (ID)</label>
                 <input 
@@ -453,7 +454,7 @@
                     required
                 >
             </div>
-        
+
             <div class="form-group">
                 <label>🔒 Mật Khẩu</label>
                 <input 
@@ -465,7 +466,7 @@
                     required
                 >
             </div>
-        
+
             <div class="form-group">
                 <label>🏪 Chọn Quán</label>
                 <select id="storeName" required>
@@ -477,7 +478,7 @@
                     <option value="Xuong">Xuong</option>
                 </select>
             </div>
-        
+
             <button type="submit" class="login-btn">🚀 Đăng Nhập</button>
         </form>
 
@@ -491,9 +492,14 @@
                 <div class="date" id="currentDate"></div>
                 <div class="store-name" id="headerStoreName"></div>
             </div>
+            
             <div class="employee-info">
-                <div class="employee-name">👤 <span id="headerEmployeeName"></span></div>
+            <div class="employee-name">
+                👤 <span id="headerEmployeeName"></span> 
+                - <span id="headerStoreNameInline"></span>
             </div>
+            </div>
+
             <div class="slogan">✨ Tinh tế từ thái độ – Đẹp đẽ từ nụ cười ✨</div>
         </div>
 
@@ -563,7 +569,7 @@
             'Ngan2k2': { password: 'Dep$Gioi', hourlyRate: 18000 },
             'Nhu2k6"':  { password: 'Xinh@Dep', hourlyRate: 18000 }
         };
-        
+
         const SUPABASE_URL = 'https://tyuufjwutazjfuiawiul.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5dXVmand1dGF6amZ1aWF3aXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA1MDk4OTIsImV4cCI6MjA3NjA4NTg5Mn0.8WEsb2tBD6akNA9h9tR9zIAqjkZz0xZYVNbYCx2dEbc';
 
@@ -687,6 +693,8 @@
                 document.getElementById('appScreen').style.display = 'block';
                 document.getElementById('headerStoreName').textContent = storeName;
                 document.getElementById('headerEmployeeName').textContent = employeeId;
+                document.getElementById('headerStoreNameInline').textContent = storeName;
+                
                 
                 updateCurrentDate();
                 setInterval(updateCurrentDate, 60000);
