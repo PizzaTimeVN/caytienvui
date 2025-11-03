@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Máy Kiếm Tiền Siêu Tốc</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: #FFF9E6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Login Screen */
+        .login-container {
+            max-width: 450px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 4px solid #FFD93D;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header .emoji {
+            font-size: 60px;
+            animation: rotate 3s infinite;
+        }
+
+        .login-header h1 {
+            color: #FF6B6B;
+            font-size: 28px;
+            margin: 15px 0;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #FFD93D;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Comic Sans MS', Arial;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #FF6B6B;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Comic Sans MS', Arial;
+        }
+
+        .login-btn:hover {
+            background: #45a049;
+            transform: scale(1.02);
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Main App */
+        .app-container {
+            display: none;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .app-header {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 3px solid #FFD93D;
+        }
+
+        .app-header .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .app-header .date {
+            color: #666;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .app-header .store-name {
+            color: #FF6B6B;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .app-header .employee-info {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .app-header .employee-name {
+            color: #4CAF50;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .app-header .slogan {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            font-style: italic;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px dashed #FFD93D;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff5252;
+            transform: scale(1.05);
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 4px solid #FFD93D;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #FF6B6B;
+            font-size: 32px;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .emoji {
+            font-size: 50px;
+            display: inline-block;
+            animation: rotate 3s infinite;
+        }
+
+        @keyframes rotate {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            75% { transform: rotate(15deg); }
+        }
+
+        .clock-display {
+            background: #E8F5E9;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 3px solid #4CAF50;
+        }
+
+        .clock-display h3 {
+            color: #2E7D32;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .time {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1B5E20;
+            font-family: 'Courier New', monospace;
+        }
+
+        .money-display {
+            background: #FFF3E0;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 3px solid #FF9800;
+        }
+
+        .money-display h3 {
+            color: #E65100;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .money {
+            font-size: 42px;
+            font-weight: bold;
+            color: #FF6F00;
+            font-family: 'Courier New', monospace;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        button {
+            flex: 1;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Comic Sans MS', Arial;
+        }
+
+        .start-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .start-btn:hover:not(:disabled) {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .end-btn {
+            background: #FF6B6B;
+            color: white;
+        }
+
+        .end-btn:hover:not(:disabled) {
+            background: #ff5252;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .advance-section {
+            background: #E3F2FD;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 3px solid #2196F3;
+        }
+
+        .advance-section h3 {
+            color: #1565C0;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #64B5F6;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Comic Sans MS', Arial;
+        }
+
+        .send-btn {
+            background: #2196F3;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover {
+            background: #1976D2;
+            transform: scale(1.05);
+        }
+
+        .notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            z-index: 1000;
+            max-width: 400px;
+            border: 5px solid #FFD93D;
+            transition: transform 0.3s;
+        }
+
+        .notification.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .notification h2 {
+            color: #FF6B6B;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .notification p {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .notification .close-btn {
+            margin-top: 20px;
+            background: #FFD93D;
+            color: #333;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        .stats {
+            background: #F3E5F5;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 3px solid #9C27B0;
+            text-align: center;
+        }
+
+        .stats p {
+            color: #6A1B9A;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-header">
+            <div class="emoji">💰</div>
+            <h1>Máy Kiếm Tiền Siêu Tốc</h1>
+            <p>Tinh tế từ thái độ – Đẹp đẽ từ nụ cười</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            Thông tin đăng nhập không chính xác!
+        </div>
+
+        <form onsubmit="login(event)">
+            <div class="form-group">
+                <label>👤 Tên Nhân Viên (ID)</label>
+                <input type="text" id="employeeId" placeholder="Nhập tên của bạn..." required>
+            </div>
+
+            <div class="form-group">
+                <label>🔒 Mật Khẩu</label>
+                <input type="password" id="password" placeholder="Nhập mật khẩu..." required>
+            </div>
+
+            <div class="form-group">
+                <label>🏪 Chọn Quán</label>
+                <select id="storeName" required>
+                    <option value="">-- Chọn quán --</option>
+                    <option value="DH">DH</option>
+                    <option value="NH">NH</option>
+                    <option value="HXH">HXH</option>
+                    <option value="PY">PY</option>
+                    <option value="Xuong">Xuong</option>
+                </select>
+            </div>
+
+            <button type="submit" class="login-btn">🚀 Đăng Nhập</button>
+        </form>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="appScreen">
+        <button class="logout-btn" onclick="logout()">Đăng Xuất</button>
+
+        <div class="app-header">
+            <div class="top-row">
+                <div class="date" id="currentDate"></div>
+                <div class="store-name" id="headerStoreName"></div>
+            </div>
+            <div class="employee-info">
+                <div class="employee-name">👤 <span id="headerEmployeeName"></span></div>
+            </div>
+            <div class="slogan">✨ Tinh tế từ thái độ – Đẹp đẽ từ nụ cười ✨</div>
+        </div>
+
+        <div class="container">
+            <div class="header">
+                <div class="emoji">💰</div>
+                <h1>Máy Kiếm Tiền Siêu Tốc!</h1>
+                <p style="color: #666;">Làm việc vui vẻ, kiếm tiền hăng hái! 🚀</p>
+            </div>
+
+            <div class="clock-display">
+                <h3>⏰ Thời Gian Làm Việc</h3>
+                <div class="time" id="timeDisplay">00:00:00</div>
+            </div>
+
+            <div class="money-display">
+                <h3>💵 Tiền Đang Kiếm Được</h3>
+                <div class="money" id="moneyDisplay">0 ₫</div>
+            </div>
+
+            <div class="stats">
+                <p><strong>📅 Tổng giờ hôm nay:</strong> <span id="todayHours">0 giờ 0 phút</span></p>
+            </div>
+
+            <div class="controls">
+                <button class="start-btn" id="startBtn" onclick="startWork()">
+                    🚀 BẮT ĐẦU CA
+                </button>
+                <button class="end-btn" id="endBtn" onclick="endWork()" disabled>
+                    🎉 KẾT THÚC CA
+                </button>
+            </div>
+
+            <div class="advance-section">
+                <h3>💸 Ứng Lương Ngay</h3>
+                <div class="input-group">
+                    <input type="number" id="advanceAmount" placeholder="Nhập số tiền muốn ứng...">
+                    <button class="send-btn" onclick="sendAdvance()">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="notification" id="notification">
+        <h2 id="notifTitle">🎊 Thông Báo</h2>
+        <p id="notifMessage"></p>
+        <button class="close-btn" onclick="closeNotification()">Đóng</button>
+    </div>
+
+    <script>
+        // Cấu hình nhân viên với lương (ẩn trong code)
+        const EMPLOYEES = {
+            'Le':     { password: 'xfgMyqK%',  hourlyRate: 23000 },
+            'Yen':    { password: 'miOdxPSD',  hourlyRate: 23000 },
+            'Kiet':   { password: '1zOYj6r^',  hourlyRate: 24000 },
+            'Tram':   { password: 'JOlqCw5?',  hourlyRate: 20000 },
+            'Tien':   { password: 'r8K%uYRh',  hourlyRate: 18000 },
+            'Thuy':   { password: 'o8jTq1OR',  hourlyRate: 17000 },
+            'Linh':   { password: '$q8CCR3v',  hourlyRate: 17000 },
+            'Nguyen': { password: 'gxk0zYBq',  hourlyRate: 17000 },
+            'Hang':   { password: 'ABcagR#V',  hourlyRate: 17000 },
+            'Binh':   { password: 'udLFSqj8',  hourlyRate: 17000 },
+            'Phuong': { password: 'M&wLVngU',  hourlyRate: 17000 },
+            'Quyen':  { password: 'CxI32zNU',  hourlyRate: 18000 },
+            'Thinh':  { password: 'Oxv#LGij',  hourlyRate: 18000 },
+            'Minh':   { password: 'WJ73QA@2',  hourlyRate: 18000 },
+            'Van':    { password: '@QiU&Al0',  hourlyRate: 18000 },
+            'Bo':     { password: '123',       hourlyRate: 20000 },
+
+        };
+
+        // Cấu hình Supabase
+        const SUPABASE_URL = 'https://tyuufjwutazjfuiawiul.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5dXVmand1dGF6amZ1aWF3aXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA1MDk4OTIsImV4cCI6MjA3NjA4NTg5Mn0.8WEsb2tBD6akNA9h9tR9zIAqjkZz0xZYVNbYCx2dEbc';
+
+        let currentUser = null;
+        let currentStore = null;
+        let startTime = null;
+        let timerInterval = null;
+        let totalSeconds = 0;
+        let todayTotalSeconds = 0;
+
+        const motivationalMessages = [
+            "Nào, mình cùng kiếm tiền nào! 💪",
+            "Hôm nay là một ngày tuyệt vời để kiếm tiền! 🌟",
+            "Let's get this bread! 🍞",
+            "Tiền tiền về đây! 💵",
+            "Cùng làm giàu thôi! 🤑"
+        ];
+
+        const endMessages = [
+            "Xuất sắc! Bạn đã làm việc rất tuyệt! 🎉",
+            "Wow! Bạn thật tài giỏi! 👏",
+            "Cố lên! Ngày mai sẽ kiếm được nhiều hơn! 💪",
+            "Tuyệt vời! Bạn xứng đáng được nghỉ ngơi! 😊",
+            "Hãy tự hào về bản thân mình! 🌟"
+        ];
+
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('vi-VN', options);
+        }
+
+        function login(event) {
+            event.preventDefault();
+            
+            const employeeId = document.getElementById('employeeId').value.trim();
+            const password = document.getElementById('password').value;
+            const storeName = document.getElementById('storeName').value;
+
+            const employee = EMPLOYEES[employeeId];
+            
+            if (employee && employee.password === password) {
+                currentUser = {
+                    name: employeeId,
+                    hourlyRate: employee.hourlyRate
+                };
+                currentStore = storeName;
+
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('appScreen').style.display = 'block';
+                document.getElementById('headerStoreName').textContent = storeName;
+                document.getElementById('headerEmployeeName').textContent = employeeId;
+                
+                updateCurrentDate();
+                setInterval(updateCurrentDate, 60000); // Cập nhật mỗi phút
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function logout() {
+            if (timerInterval) {
+                if (confirm('Bạn đang trong ca làm việc. Bạn có chắc muốn đăng xuất?')) {
+                    clearInterval(timerInterval);
+                    resetApp();
+                }
+            } else {
+                resetApp();
+            }
+        }
+
+        function resetApp() {
+            currentUser = null;
+            currentStore = null;
+            startTime = null;
+            totalSeconds = 0;
+            todayTotalSeconds = 0;
+            
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('appScreen').style.display = 'none';
+            document.getElementById('employeeId').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('storeName').value = '';
+            
+            updateDisplay();
+            updateTodayHours();
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function calculateMoney(seconds) {
+            const hourlyRate = currentUser.hourlyRate;
+            const hours = seconds / 3600;
+            return Math.floor(hours * hourlyRate);
+        }
+
+        function updateDisplay() {
+            document.getElementById('timeDisplay').textContent = formatTime(totalSeconds);
+            const money = calculateMoney(totalSeconds);
+            document.getElementById('moneyDisplay').textContent = formatNumber(money) + ' ₫';
+        }
+
+        function updateTodayHours() {
+            const hours = Math.floor(todayTotalSeconds / 3600);
+            const minutes = Math.floor((todayTotalSeconds % 3600) / 60);
+            document.getElementById('todayHours').textContent = `${hours} giờ ${minutes} phút`;
+        }
+
+        function showNotification(title, message) {
+            document.getElementById('notifTitle').textContent = title;
+            document.getElementById('notifMessage').textContent = message;
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('notification').classList.add('show');
+        }
+
+        function closeNotification() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('notification').classList.remove('show');
+        }
+
+        async function sendToSupabase(endpoint, data) {
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(data)
+                });
+                return response.ok;
+            } catch (error) {
+                console.error('Lỗi kết nối Supabase:', error);
+                return false;
+            }
+        }
+
+        async function startWork() {
+            startTime = new Date();
+            totalSeconds = 0;
+            
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('endBtn').disabled = false;
+
+            timerInterval = setInterval(() => {
+                totalSeconds++;
+                updateDisplay();
+            }, 1000);
+
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            showNotification('🚀 Bắt Đầu Ca Làm!', randomMessage);
+
+            // Gửi thời gian bắt đầu về Supabase
+            await sendToSupabase('work_sessions', {
+                employee_name: currentUser.name,
+                store_name: currentStore,
+                start_time: startTime.toISOString(),
+                date: startTime.toISOString().split('T')[0]
+            });
+        }
+
+        async function endWork() {
+            if (!startTime) return;
+
+            clearInterval(timerInterval);
+            const endTime = new Date();
+            const workedSeconds = totalSeconds;
+            const earnedMoney = calculateMoney(workedSeconds);
+
+            todayTotalSeconds += workedSeconds;
+            updateTodayHours();
+
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('endBtn').disabled = true;
+
+            const randomEndMessage = endMessages[Math.floor(Math.random() * endMessages.length)];
+            showNotification(
+                '🎉 Chúc Mừng!',
+                `Bạn đã kiếm được ${formatNumber(earnedMoney)} ₫!\n\n${randomEndMessage}`
+            );
+
+            // Gửi thông tin ca làm về Supabase
+            await sendToSupabase('work_sessions', {
+                employee_name: currentUser.name,
+                store_name: currentStore,
+                start_time: startTime.toISOString(),
+                end_time: endTime.toISOString(),
+                total_seconds: workedSeconds,
+                earned_money: earnedMoney,
+                hourly_rate: currentUser.hourlyRate,
+                date: startTime.toISOString().split('T')[0]
+            });
+
+            totalSeconds = 0;
+            updateDisplay();
+            startTime = null;
+        }
+
+        async function sendAdvance() {
+            const amount = parseFloat(document.getElementById('advanceAmount').value);
+            
+            if (!amount || amount <= 0) {
+                showNotification('❌ Lỗi', 'Vui lòng nhập số tiền hợp lệ!');
+                return;
+            }
+
+            const success = await sendToSupabase('salary_advances', {
+                employee_name: currentUser.name,
+                store_name: currentStore,
+                amount: amount,
+                request_time: new Date().toISOString(),
+                date: new Date().toISOString().split('T')[0]
+            });
+
+            if (success) {
+                showNotification('✅ Thành Công!', `Đã gửi yêu cầu ứng ${formatNumber(amount)} ₫\n\nChờ xét duyệt nhé! 😊`);
+                document.getElementById('advanceAmount').value = '';
+            } else {
+                showNotification('❌ Lỗi', 'Không thể gửi yêu cầu. Vui lòng thử lại!');
+            }
+        }
+
+        // Khởi tạo
+        updateDisplay();
+        updateTodayHours();
+    </script>
+</body>
+</html>
